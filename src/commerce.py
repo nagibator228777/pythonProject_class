@@ -1,11 +1,11 @@
-class Product:
+from src.base_class import LoggingMixin, BaseProduct, BaseContainer
+
+
+class Product(LoggingMixin ,BaseProduct):
     total_products = 0
 
     def __init__(self, name, description, price, quantity):
-        self.name = name
-        self.description = description
-        self._price = price
-        self.quantity = quantity
+        super().__init__(name, description, price, quantity)
         Product.total_products += 1
 
     @classmethod
@@ -45,8 +45,7 @@ class Product:
             raise TypeError("Нельзя складывать продукты разных типов")
         return (self.price * self.quantity) + (other.price * other.quantity)
 
-
-class Category:
+class Category(BaseContainer):
     category_count = 0
     product_count = 0
 
