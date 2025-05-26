@@ -35,10 +35,15 @@ class Product:
                 print("Изменение цены отменено")
                 return
 
-        self.__price = new_price
+        self._price = new_price
 
     def __str__(self):
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
+
+    def __add__(self, other):
+        if not isinstance(other, Product):
+            raise TypeError("Можно складывать только объекты Product")
+        return (self.price * self.quantity) + (other.price * other.quantity)
 
 
 class Category:
@@ -68,3 +73,7 @@ class Category:
 
     def __len__(self):
         return len(self.__products)
+
+    def __str__(self):
+        total_quantity = sum(product.quantity for product in self.__products)
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
